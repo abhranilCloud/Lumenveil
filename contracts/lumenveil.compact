@@ -14,3 +14,21 @@ export ledger entry_limit: Uint<32>;
 export ledger used_nullifiers: Set<Bytes<32>>;
 export ledger entry_log: Map<Bytes<32>, Bytes<32>>;
 export sealed ledger edition: Bytes<32>;
+
+constructor(
+    threshold: Uint<64>,
+    pass: Bytes<32>,
+    deadline: Uint<64>,
+    curator: Bytes<32>,
+    steward_hash: Bytes<32>,
+    limit: Uint<32>
+) {
+    entry_threshold = disclose(threshold);
+    access_pass_id = disclose(pass);
+    entry_deadline = disclose(deadline);
+    curator_id = disclose(curator);
+    steward = disclose(steward_hash);
+    gate_open = disclose(true);
+    entry_limit = disclose(limit);
+    edition = disclose(pad(32, "Lumenveil:v1.0"));
+}
