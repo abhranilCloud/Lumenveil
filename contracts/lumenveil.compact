@@ -1,0 +1,16 @@
+pragma language_version >=0.22.0;
+
+import CompactStandardLibrary;
+
+// Public gate configuration. Every exported ledger field is readable on-chain.
+export ledger entry_threshold: Uint<64>;
+export ledger access_pass_id: Bytes<32>;
+export ledger entry_deadline: Uint<64>;
+export ledger curator_id: Bytes<32>;
+export ledger steward: Bytes<32>;
+export ledger gate_open: Boolean;
+export ledger total_entries: Counter;
+export ledger entry_limit: Uint<32>;
+export ledger used_nullifiers: Set<Bytes<32>>;
+export ledger entry_log: Map<Bytes<32>, Bytes<32>>;
+export sealed ledger edition: Bytes<32>;
