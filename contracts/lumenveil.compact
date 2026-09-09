@@ -35,6 +35,12 @@ constructor(
     edition = disclose(pad(32, "Lumenveil:v1.0"));
 }
 
+export circuit close_gate(): [] {
+    const sk = steward_secret();
+    assert(steward == steward_public_key(sk), "Not authorized as steward");
+    gate_open = disclose(false);
+}
+
 export circuit open_gate(): [] {
     const sk = steward_secret();
     assert(steward == steward_public_key(sk), "Not authorized as steward");
