@@ -15,6 +15,9 @@ export ledger used_nullifiers: Set<Bytes<32>>;
 export ledger entry_log: Map<Bytes<32>, Bytes<32>>;
 export sealed ledger edition: Bytes<32>;
 
+// Private witnesses. Values are supplied by the browser and stay inside the proof.
+witness get_eligibility_score(): Uint<64>;
+witness get_passphrase(): Bytes<32>;
 witness steward_secret(): Bytes<32>;
 
 constructor(
