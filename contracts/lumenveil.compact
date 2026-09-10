@@ -38,6 +38,24 @@ constructor(
     edition = disclose(pad(32, "Lumenveil:v1.0"));
 }
 
+// Proves a private eligibility score clears the public threshold.
+export circuit prove_entry(): [] {
+    assert(disclose(gate_open), "The gate is closed");
+    assert(blockTimeLt(disclose(entry_deadline)), "This pass has expired");
+    assert(disclose(total_entries) < disclose(entry_limit), "Entry capacity reached");
+
+    const score = get_eligibility_score();
+    assert(score >= entry_threshold, "Eligibility threshold not met");
+
+    const passphrase = get_passphrase();
+    const nullifier = make_entry_nullifier(passphrase, access_pass_id);
+    assert(!used_nullifiers.member(disclose(nullifier)), "This pass has already been used");
+
+    used_nullifiers.insert(disclose(nullifier));
+    entry_log.insert(disclose(nullifier), disclose(access_pass_id));
+    total_entries.increment(1);
+}
+
 export circuit close_gate(): [] {
     const sk = steward_secret();
     assert(steward == steward_public_key(sk), "Not authorized as steward");
