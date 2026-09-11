@@ -56,6 +56,24 @@ export circuit prove_entry(): [] {
     total_entries.increment(1);
 }
 
+// Steward-only gate configuration. The private key is never submitted as an argument.
+export circuit rotate_gate(
+    new_threshold: Uint<64>,
+    new_pass: Bytes<32>,
+    new_deadline: Uint<64>,
+    new_curator: Bytes<32>,
+    new_limit: Uint<32>
+): [] {
+    const sk = steward_secret();
+    assert(steward == steward_public_key(sk), "Not authorized as steward");
+    entry_threshold = disclose(new_threshold);
+    access_pass_id = disclose(new_pass);
+    entry_deadline = disclose(new_deadline);
+    curator_id = disclose(new_curator);
+    entry_limit = disclose(new_limit);
+    gate_open = disclose(true);
+}
+
 export circuit close_gate(): [] {
     const sk = steward_secret();
     assert(steward == steward_public_key(sk), "Not authorized as steward");
