@@ -97,5 +97,3 @@ export pure circuit make_entry_nullifier(passphrase: Bytes<32>, pass: Bytes<32>)
         pass
     ]);
 }
-
-// Verified Compact contract interface for Lumenveil allowlist gate.
