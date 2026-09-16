@@ -42,4 +42,9 @@ describe('Lumenveil Compact contract', () => {
     state = result.context.currentQueryContext.state;
     expect(ledger(state).total_entries).toBe(1n);
   });
+
+  it('rejects a private score below the threshold', () => {
+    contract.witnesses = { get_eligibility_score: () => [{}, 20n], get_passphrase: () => [{}, bytes()], steward_secret: () => [{}, stewardSecret] } as any;
+    expect(() => contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}))).toThrow(/Eligibility threshold/);
+  });
 });
