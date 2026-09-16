@@ -35,4 +35,11 @@ describe('Lumenveil Compact contract', () => {
     expect(value.total_entries).toBe(0n);
     expect(value.entry_limit).toBe(10n);
   });
+
+  it('accepts an eligible private witness', () => {
+    contract.witnesses = { get_eligibility_score: () => [{}, 90n], get_passphrase: () => [{}, eligibleSecret], steward_secret: () => [{}, stewardSecret] } as any;
+    const result = contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}));
+    state = result.context.currentQueryContext.state;
+    expect(ledger(state).total_entries).toBe(1n);
+  });
 });
