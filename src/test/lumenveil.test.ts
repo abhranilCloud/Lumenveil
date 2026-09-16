@@ -47,4 +47,9 @@ describe('Lumenveil Compact contract', () => {
     contract.witnesses = { get_eligibility_score: () => [{}, 20n], get_passphrase: () => [{}, bytes()], steward_secret: () => [{}, stewardSecret] } as any;
     expect(() => contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}))).toThrow(/Eligibility threshold/);
   });
+
+  it('prevents the same private passphrase from entering twice', () => {
+    contract.witnesses = { get_eligibility_score: () => [{}, 90n], get_passphrase: () => [{}, eligibleSecret], steward_secret: () => [{}, stewardSecret] } as any;
+    expect(() => contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}))).toThrow(/already been used/);
+  });
 });
