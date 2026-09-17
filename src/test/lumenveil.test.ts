@@ -52,4 +52,22 @@ describe('Lumenveil Compact contract', () => {
     contract.witnesses = { get_eligibility_score: () => [{}, 90n], get_passphrase: () => [{}, eligibleSecret], steward_secret: () => [{}, stewardSecret] } as any;
     expect(() => contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}))).toThrow(/already been used/);
   });
+
+  it('allows only the steward to close and reopen the gate', () => {
+    contract.witnesses = { get_eligibility_score: () => [{}, 90n], get_passphrase: () => [{}, bytes()], steward_secret: () => [{}, stewardSecret] } as any;
+    let result = contract.circuits.close_gate(createCircuitContext(contractAddress, userAddress, state, {}));
+    state = result.context.currentQueryContext.state;
+    expect(ledger(state).gate_open).toBe(false);
+    expect(() => contract.circuits.prove_entry(createCircuitContext(contractAddress, userAddress, state, {}))).toThrow(/gate is closed/i);
+    result = contract.circuits.open_gate(createCircuitContext(contractAddress, userAddress, state, {}));
+    state = result.context.currentQueryContext.state;
+    expect(ledger(state).gate_open).toBe(true);
+  });
+
+  it('derives different nullifiers for different pass identifiers', () => {
+    const first = pureCircuits.make_entry_nullifier(bytes(), pass);
+    const second = pureCircuits.make_entry_nullifier(bytes(), pass);
+    expect(first).toHaveLength(32);
+    expect(Buffer.from(first).equals(Buffer.from(second))).toBe(false);
+  });
 });
