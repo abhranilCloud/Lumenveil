@@ -1,0 +1,91 @@
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import '@midnight-ntwrk/dapp-connector-api';
+import type { ConnectedAPI, InitialAPI } from '@midnight-ntwrk/dapp-connector-api';
+import { createConnectedSession, type ConnectedSession } from '../lib/midnight';
+
+export type WalletStatus = 'checking' | 'detected' | 'not-found';
+export type WalletType = '1am' | 'lace' | 'other' | null;
+export type WalletEntry = { id: string; name: string; api: InitialAPI };
+
+type WalletContextValue = {
+  address: string | null;
+  isConnected: boolean;
+  walletType: WalletType;
+  walletName: string | null;
+  walletStatus: WalletStatus;
+  isConnecting: boolean;
+  session: ConnectedSession | null;
+  availableWallets: WalletEntry[];
+  connect: (network?: 'preview' | 'preprod', walletId?: string) => Promise<ConnectedSession | undefined>;
+  disconnect: () => void;
+};
+const WalletContext = createContext<WalletContextValue | null>(null);
+
+export function listInjectedWallets(): WalletEntry[] {
+  if (typeof window === 'undefined') return [];
+  const midnight = (window as any).midnight;
+  if (!midnight) return [];
+  return Object.entries(midnight).map(([id, api]) => ({
+    id,
+    api: api as InitialAPI,
+    name: (api as any).name || (id === '1am' ? '1AM Wallet' : id === 'mnLace' ? 'Lace Wallet' : id),
+  }));
+}
+
+export function WalletProvider({ children }: { children: React.ReactNode }) {
+  const [walletStatus, setWalletStatus] = useState<WalletStatus>('checking');
+  const [availableWallets, setAvailableWallets] = useState<WalletEntry[]>([]);
+  const [walletType, setWalletType] = useState<WalletType>(null);
+  const [walletName, setWalletName] = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
+  const [session, setSession] = useState<ConnectedSession | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const connecting = useRef(false);
+
+  const detect = useCallback((timeout = 6000) => {
+    const started = Date.now();
+    const id = window.setInterval(() => {
+      const wallets = listInjectedWallets();
+      if (wallets.length) {
+        setAvailableWallets(wallets); setWalletStatus('detected');
+        setWalletName(wallets[0].name); setWalletType(wallets[0].id === '1am' ? '1am' : wallets[0].id.toLowerCase().includes('lace') ? 'lace' : 'other');
+        window.clearInterval(id);
+      } else if (Date.now() - started > timeout) {
+        setWalletStatus('not-found'); window.clearInterval(id);
+      }
+    }, 250);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => detect(), [detect]);
+
+  const connect = useCallback(async (network: 'preview' | 'preprod' = 'preprod', walletId?: string) => {
+    if (connecting.current) return;
+    connecting.current = true; setIsConnecting(true);
+    try {
+      const wallets = listInjectedWallets();
+      if (!wallets.length) throw new Error('Install a Midnight-compatible wallet such as 1AM or Lace first.');
+      const chosen = wallets.find((item) => item.id === walletId) || wallets.find((item) => item.id === '1am') || wallets[0];
+      const api: ConnectedAPI = await chosen.api.connect(network);
+      const connected = await createConnectedSession(api as any);
+      setSession(connected); setAddress(connected.unshieldedAddress); setWalletName(chosen.name);
+      setWalletType(chosen.id === '1am' ? '1am' : chosen.id.toLowerCase().includes('lace') ? 'lace' : 'other');
+      return connected;
+    } finally {
+      connecting.current = false; setIsConnecting(false);
+    }
+  }, []);
+
+  const disconnect = useCallback(() => {
+    setSession(null); setAddress(null); setWalletName(null); setWalletType(null); setWalletStatus('checking');
+    detect(3000);
+  }, [detect]);
+
+  return <WalletContext.Provider value={{ address, isConnected: Boolean(session), walletType, walletName, walletStatus, isConnecting, session, availableWallets, connect, disconnect }}>{children}</WalletContext.Provider>;
+}
+
+export function useWallet() {
+  const context = useContext(WalletContext);
+  if (!context) throw new Error('useWallet must be used inside WalletProvider');
+  return context;
+}
