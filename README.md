@@ -4,7 +4,18 @@
 
 Lumenveil is a privacy-first allowlist gate for Midnight Network. A member proves that a private eligibility signal clears a curator's public threshold, while the signal, passphrase, and identity stay inside the proving session.
 
-> **Project state:** complete local codebase and deployment portal. The only manual steps left are deploying a gate to Preview/Preprod, adding your own screenshots, and creating the repository history.
+> **Project state:** Contract deployed to Preprod. Deployed contract address and verification transaction are registered below.
+
+---
+
+## Deployed Contract (Preprod)
+
+- **Contract Address:** `mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d`
+- **Deployment Transaction:** [`b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e`](https://explorer.1am.xyz/tx/b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e?network=preprod)
+- **Contract Explorer:** [View Contract on 1AM Explorer](https://explorer.1am.xyz/contract/mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d?network=preprod)
+- **Deployment Status:** Verified on-chain via 1AM Preprod Explorer
+
+---
 
 ## Product idea
 
