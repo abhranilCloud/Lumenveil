@@ -10,6 +10,7 @@ Lumenveil is a privacy-first allowlist gate for Midnight Network. A member prove
 
 ## Deployed Contract (Preprod)
 
+- **Live Application Demo:** [https://luenveil.netlify.app](https://luenveil.netlify.app)
 - **Contract Address:** `mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d`
 - **Deployment Transaction:** [`b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e`](https://explorer.1am.xyz/tx/b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e?network=preprod)
 - **Contract Explorer:** [View Contract on 1AM Explorer](https://explorer.1am.xyz/contract/mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d?network=preprod)
@@ -160,17 +161,17 @@ The deployer uses `CompiledContract.make`, `createUnprovenDeployTx`, `sampleSign
 | Level | Implementation in this project | Manual evidence still needed |
 |---|---|---|
 | 1 — New Moon | Compact source, generated `managed/` directory, deterministic tests, setup docs, public/private explanation, **Preprod deployed contract** | Add compile screenshot, make 5 meaningful commits |
-| 2 — Waxing Crescent | Wallet connect/disconnect, browser proving session, real `prove_entry` call, observable anonymous entry, **verified on-chain Preprod contract** | Live demo URL, demo video, reach 8 commits |
+| 2 — Waxing Crescent | Wallet connect/disconnect, browser proving session, real `prove_entry` call, observable anonymous entry, **verified on-chain Preprod contract**, **live demo URL** | Demo video, reach 8 commits |
 | 3 — First Quarter | Private allowlist product proposal, 11+ automated tests, CI workflow compiling/testing/building, privacy observatory | Push workflow and capture passing run, demo video, reach 10 commits |
-| 4 — Waxing Gibbous | Steward deployment portal, public/private technical docs, release build workflow, product-ready UI, day/night theme | Add live link and X profile, screenshots/video, reach 15 commits |
+| 4 — Waxing Gibbous | Steward deployment portal, public/private technical docs, release build workflow, product-ready UI, day/night theme, **live Netlify deployment** | Add X profile, screenshots/video, reach 15 commits |
 
 ## Evidence checklist
 
 - [x] deployed contract address and transaction on Preprod (`mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d`)
+- [x] live Preview/Preprod demo URL: [https://luenveil.netlify.app](https://luenveil.netlify.app)
 - [ ] screenshot of `npm run compile` showing all four circuits
 - [ ] screenshot of the deployed contract address in the Steward desk / 1AM Explorer
 - [ ] screenshot of at least three passing tests
-- [ ] live Preview/Preprod demo URL
 - [ ] one-minute wallet connect → proof → confirmation video
 - [ ] CI badge and a passing GitHub Actions run
 - [ ] product X profile link
