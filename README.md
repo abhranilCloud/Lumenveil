@@ -28,20 +28,24 @@ Lumenveil is a privacy-first allowlist gate for Midnight Network. A member prove
 
 ## 📸 Interface & Evidence Gallery
 
-### 1. Member Gate — Private Proof Generation
-Prove that a private eligibility score meets the gate threshold without revealing the score or identity on-chain.
-![Member Gate](assets/2.png)
+### Screenshot 1: Hero Overview & Application Interface
+High-contrast observatory interface featuring dark/light aesthetic, constellation hero, live wallet indicators, and quick navigation.
+![Lumenveil Overview](assets/1.png)
 
-### 2. Public Observatory — Zero-Knowledge Ledger State
-Inspect public gate metrics, threshold values, and anonymous entry records without exposing private member data.
+### Screenshot 2: Member Gate — Zero-Knowledge Proof Generation
+A member proves their private eligibility score meets the gate threshold without revealing the score, passphrase, or identity on-chain.
+![Member Gate Proving Flow](assets/2.png)
+
+### Screenshot 3: Public Observatory — On-Chain State Inspection
+Real-time inspection of public gate parameters (threshold, deadline, entry limit) and anonymous nullifier logs without exposing private credentials.
 ![Public Observatory](assets/3.png)
 
-### 3. Steward Desk — Browser Deployment & Access Controls
-Deploy and manage Compact contracts directly via connected 1AM / Midnight browser wallet.
-![Steward Desk](assets/4.png)
+### Screenshot 4: Steward Desk — Wallet Deployment & Access Controls
+Curator portal enabling browser-based contract deployment via 1AM / Midnight browser wallet, threshold adjustments, and gate lifecycle management.
+![Steward Desk Deployment](assets/4.png)
 
-### 4. CI/CD & Automated Verification Pipeline
-Continuous integration testing Compact contracts, deterministic witness proofs, and Vite frontend builds.
+### Screenshot 5: CI/CD Pipeline & Automated Verification
+Continuous integration pipeline running automated Compact contract tests, deterministic witness proofs, and production frontend builds.
 ![CI/CD Pipeline](assets/cicd.png)
 
 ---
