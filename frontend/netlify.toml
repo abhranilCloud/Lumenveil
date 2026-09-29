@@ -16,12 +16,6 @@
     Cross-Origin-Embedder-Policy = "require-corp"
     Cross-Origin-Opener-Policy = "same-origin"
 
-# Proper MIME type for compiled WebAssembly modules
-[[headers]]
-  for = "*.wasm"
-  [headers.values]
-    Content-Type = "application/wasm"
-
 # CORS and caching for proving keys and managed circuits
 [[headers]]
   for = "/managed/*"
