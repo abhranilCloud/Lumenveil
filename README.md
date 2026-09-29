@@ -50,6 +50,15 @@ Continuous integration pipeline running automated Compact contract tests, determ
 
 ---
 
+## 🎨 Brand Assets & X (Twitter) Banner
+
+- **Official Master Logo (1024×1024 PNG):** [`assets/logo.png`](assets/logo.png)
+- **Official X Profile Banner (1920×1080, 16:9 ratio):** [`assets/banner.png`](assets/banner.png)
+
+![Lumenveil X Profile Banner](assets/banner.png)
+
+---
+
 ## Product idea
 
 Private communities, research rooms, and event drops should be able to verify membership without turning a guest list into a public identity map. Lumenveil gives a curator a verifiable gate: publish the rule, let a member prove they meet it, and record only an anonymous one-time result. The same pattern can power confidential credentials, private allowlists, and invitation-only access without forcing users to disclose their wallet address or the underlying credential.
