@@ -16,6 +16,8 @@ type WalletContextValue = {
   isConnecting: boolean;
   session: ConnectedSession | null;
   availableWallets: WalletEntry[];
+  error: string | null;
+  clearError: () => void;
   connect: (network?: 'preview' | 'preprod', walletId?: string) => Promise<ConnectedSession | undefined>;
   disconnect: () => void;
 };
@@ -40,7 +42,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
   const [session, setSession] = useState<ConnectedSession | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const connecting = useRef(false);
+
+  const clearError = useCallback(() => setError(null), []);
 
   const detect = useCallback((timeout = 6000) => {
     const started = Date.now();
@@ -61,7 +66,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
   const connect = useCallback(async (network: 'preview' | 'preprod' = 'preprod', walletId?: string) => {
     if (connecting.current) return;
-    connecting.current = true; setIsConnecting(true);
+    connecting.current = true; setIsConnecting(true); setError(null);
     try {
       const wallets = listInjectedWallets();
       if (!wallets.length) throw new Error('Install a Midnight-compatible wallet such as 1AM or Lace first.');
@@ -70,18 +75,28 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       const connected = await createConnectedSession(api as any);
       setSession(connected); setAddress(connected.unshieldedAddress); setWalletName(chosen.name);
       setWalletType(chosen.id === '1am' ? '1am' : chosen.id.toLowerCase().includes('lace') ? 'lace' : 'other');
+      setError(null);
       return connected;
+    } catch (cause: any) {
+      const msg = cause?.message || String(cause);
+      if (msg.toLowerCase().includes('syncing')) {
+        setError('1AM Wallet is syncing with Midnight Network. Please click your 1AM extension icon in your browser toolbar and wait for sync to reach 100%.');
+      } else if (msg.toLowerCase().includes('rate limit')) {
+        setError('1AM Wallet rate limited due to repeated requests. Please wait 30 seconds before retrying.');
+      } else {
+        setError(msg);
+      }
     } finally {
       connecting.current = false; setIsConnecting(false);
     }
   }, []);
 
   const disconnect = useCallback(() => {
-    setSession(null); setAddress(null); setWalletName(null); setWalletType(null); setWalletStatus('checking');
+    setSession(null); setAddress(null); setWalletName(null); setWalletType(null); setWalletStatus('checking'); setError(null);
     detect(3000);
   }, [detect]);
 
-  return <WalletContext.Provider value={{ address, isConnected: Boolean(session), walletType, walletName, walletStatus, isConnecting, session, availableWallets, connect, disconnect }}>{children}</WalletContext.Provider>;
+  return <WalletContext.Provider value={{ address, isConnected: Boolean(session), walletType, walletName, walletStatus, isConnecting, session, availableWallets, error, clearError, connect, disconnect }}>{children}</WalletContext.Provider>;
 }
 
 export function useWallet() {

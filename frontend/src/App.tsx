@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { Moon, Sun, ShieldCheck, WalletCards, LogOut, Menu, X } from 'lucide-react';
+import { Moon, Sun, ShieldCheck, WalletCards, LogOut, Menu, X, AlertTriangle } from 'lucide-react';
 import { useWallet } from './contexts/WalletContext';
 import LandingPage from './pages/LandingPage';
 import GatePage from './pages/GatePage';
@@ -9,7 +9,7 @@ import ObservatoryPage from './pages/ObservatoryPage';
 import PhilosophyPage from './pages/PhilosophyPage';
 
 export default function App() {
-  const { address, isConnected, connect, disconnect, isConnecting, walletStatus, walletName } = useWallet();
+  const { address, isConnected, connect, disconnect, isConnecting, walletStatus, walletName, error, clearError } = useWallet();
   const [theme, setTheme] = useState<'night' | 'day'>(() => (localStorage.getItem('LUMENVEIL_THEME') as 'night' | 'day') || 'night');
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -18,6 +18,15 @@ export default function App() {
   const shortAddress = address ? `${address.slice(0, 7)}…${address.slice(-5)}` : '';
 
   return <div className="site-shell">
+    {error && (
+      <div style={{ background: 'color-mix(in srgb, var(--danger) 18%, var(--bg))', color: 'var(--text)', borderBottom: '1px solid color-mix(in srgb, var(--danger) 40%, transparent)', padding: '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', fontSize: '13px', lineHeight: 1.5 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <AlertTriangle size={18} style={{ color: 'var(--danger)', flexShrink: 0 }} />
+          <span>{error}</span>
+        </div>
+        <button onClick={clearError} style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', padding: '4px 8px', borderRadius: '4px', fontSize: '14px' }} title="Dismiss">✕</button>
+      </div>
+    )}
     <header className="topbar">
       <Link className="brand" to="/"><span className="brand-mark"><span /></span><span>LUMENVEIL</span></Link>
       <button className="mobile-menu" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle navigation">{mobileOpen ? <X /> : <Menu />}</button>
@@ -29,7 +38,7 @@ export default function App() {
       </nav>
       <div className="topbar-actions">
         <button className="icon-button" onClick={() => setTheme(theme === 'night' ? 'day' : 'night')} aria-label={`Switch to ${theme === 'night' ? 'day' : 'night'} theme`} title="Toggle day / night">{theme === 'night' ? <Sun size={17} /> : <Moon size={17} />}</button>
-        {isConnected ? <button className="wallet-chip" onClick={disconnect} title="Disconnect wallet"><span className="online-dot" /><span>{walletName || 'Wallet'} · {shortAddress}</span><LogOut size={14} /></button> : <button className="connect-button" onClick={() => connect('preprod')} disabled={isConnecting || walletStatus === 'not-found'}><WalletCards size={15} />{isConnecting ? 'Opening…' : walletStatus === 'not-found' ? 'Install wallet' : 'Connect wallet'}</button>}
+        {isConnected ? <button className="wallet-chip" onClick={disconnect} title="Disconnect wallet"><span className="online-dot" /><span>{walletName || 'Wallet'} · {shortAddress}</span><LogOut size={14} /></button> : <button className="connect-button" onClick={() => void connect('preprod')} disabled={isConnecting || walletStatus === 'not-found'}><WalletCards size={15} />{isConnecting ? 'Opening…' : walletStatus === 'not-found' ? 'Install wallet' : 'Connect wallet'}</button>}
       </div>
     </header>
     <main><Routes><Route path="/" element={<LandingPage />} /><Route path="/gate" element={<GatePage />} /><Route path="/steward" element={<AdminPage />} /><Route path="/admin" element={<AdminPage />} /><Route path="/observatory" element={<ObservatoryPage />} /><Route path="/philosophy" element={<PhilosophyPage />} /></Routes></main>
