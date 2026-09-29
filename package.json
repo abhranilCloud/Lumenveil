@@ -15,7 +15,7 @@
     "test:preprod": "cross-env MIDNIGHT_NETWORK=preprod npm run test",
     "env:up": "docker compose up -d --wait",
     "env:down": "docker compose down",
-    "build": "npm run build -w lumenveil-frontend",
+    "build": "npm run build -w lumenveil-frontend && node --input-type=module -e \"import fs from 'node:fs'; fs.cpSync('frontend/dist', 'dist', {recursive:true});\"",
     "check": "npm run test && npm run build"
   },
   "dependencies": {
