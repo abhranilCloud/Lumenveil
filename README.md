@@ -4,6 +4,7 @@
 [![Midnight Preprod](https://img.shields.io/badge/Midnight-Preprod%20Verified-blueviolet)](https://explorer.1am.xyz/contract/mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d?network=preprod)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-luenveil.netlify.app-00C7B7)](https://luenveil.netlify.app)
 [![Demo Video](https://img.shields.io/badge/Demo%20Video-Google%20Drive-red)](https://drive.google.com/file/d/1u1SkOne7ej5Yoq1EFRcod6GRpp3C1kvy/view?usp=sharing)
+[![X Profile](https://img.shields.io/badge/X-@LumenveilZK-black)](https://x.com/LumenveilZK)
 
 ### Private access, visibly verified.
 
@@ -11,7 +12,7 @@ Lumenveil is a privacy-first allowlist gate for Midnight Network. A member prove
 
 ![Lumenveil Interface Overview](assets/1.png)
 
-> **Project state:** Contract deployed to Preprod. Deployed contract address, live web application, and video demonstration are linked below.
+> **Project state:** Contract deployed to Preprod. Deployed contract address, live web application, video demonstration, and official X (Twitter) channel are linked below.
 
 ---
 
@@ -19,6 +20,9 @@ Lumenveil is a privacy-first allowlist gate for Midnight Network. A member prove
 
 - 🌐 **Live Web Application:** [https://luenveil.netlify.app](https://luenveil.netlify.app)
 - 🎥 **Demo Video Walkthrough:** [Watch 1-Minute Demo Video](https://drive.google.com/file/d/1u1SkOne7ej5Yoq1EFRcod6GRpp3C1kvy/view?usp=sharing)
+- 🐦 **Official X Profile:** [@LumenveilZK](https://x.com/LumenveilZK)
+- 📢 **Launch Announcement Post:** [View on X](https://x.com/LumenveilZK/status/2104920507305050423?s=20)
+- 🧵 **Product Thread / Overview:** [View on X](https://x.com/LumenveilZK/status/2104920455258001643?s=20)
 - 📜 **Contract Address:** [`mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d`](https://explorer.1am.xyz/contract/mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d?network=preprod)
 - 🔍 **Deployment Transaction:** [`b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e`](https://explorer.1am.xyz/tx/b2ed3febe5b34c22b621dde4d41b30d47d73b9c91ddb5e05e160b047284e560e?network=preprod)
 - 🧭 **1AM Contract Explorer:** [View on 1AM Explorer](https://explorer.1am.xyz/contract/mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d?network=preprod)
@@ -204,13 +208,15 @@ The deployer uses `CompiledContract.make`, `createUnprovenDeployTx`, `sampleSign
 | 1 — New Moon | Compact source, generated `managed/` directory, deterministic tests, setup docs, public/private explanation, **Preprod deployed contract** | ✅ Verified on Preprod, 70+ commits, docs ready |
 | 2 — Waxing Crescent | Wallet connect/disconnect, browser proving session, real `prove_entry` call, observable anonymous entry, **verified on-chain Preprod contract**, **live demo URL**, **demo video** | ✅ Live on [luenveil.netlify.app](https://luenveil.netlify.app) & [Demo Video](https://drive.google.com/file/d/1u1SkOne7ej5Yoq1EFRcod6GRpp3C1kvy/view?usp=sharing) |
 | 3 — First Quarter | Private allowlist product proposal, 11+ automated tests, CI workflow compiling/testing/building, privacy observatory, **full functionality demo video** | ✅ Passing CI workflow ([`assets/cicd.png`](assets/cicd.png)), full test suite, demo video |
-| 4 — Waxing Gibbous | Steward deployment portal, public/private technical docs, release build workflow, product-ready UI, day/night theme, **live Netlify deployment** | ✅ Complete UI screenshots gallery, production build live |
+| 4 — Waxing Gibbous | Steward deployment portal, public/private technical docs, release build workflow, product-ready UI, day/night theme, **live Netlify deployment**, **public product (X) profile** | ✅ Complete UI screenshots gallery, live production build, [@LumenveilZK](https://x.com/LumenveilZK) active on X |
 
 ## Evidence checklist
 
 - [x] Deployed contract address and transaction on Preprod (`mn_addr_preview1dhz0lg68503awm8x98f3l4te3ae74jay2fewfysywu5kd4st5anqj0yg5d`)
 - [x] Live Preview/Preprod demo URL: [https://luenveil.netlify.app](https://luenveil.netlify.app)
 - [x] One-minute wallet connect → proof → confirmation video: [Watch Demo Video](https://drive.google.com/file/d/1u1SkOne7ej5Yoq1EFRcod6GRpp3C1kvy/view?usp=sharing)
+- [x] Official X (Twitter) profile & product announcements: [@LumenveilZK](https://x.com/LumenveilZK) ([Launch Post](https://x.com/LumenveilZK/status/2104920507305050423?s=20) · [Thread](https://x.com/LumenveilZK/status/2104920455258001643?s=20))
+- [x] Official 16:9 X profile banner and master logo ([`assets/banner.png`](assets/banner.png) & [`assets/logo.png`](assets/logo.png))
 - [x] Screenshot of deployed contract address and Steward desk ([`assets/4.png`](assets/4.png))
 - [x] Screenshot of Member Gate ZK proving flow ([`assets/2.png`](assets/2.png))
 - [x] Screenshot of Public State Observatory ([`assets/3.png`](assets/3.png))
